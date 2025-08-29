@@ -1,0 +1,76 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: color-project
+  namespace: argocd
+  # Finalizer to ensure project resources are deleted when the project is deleted
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  description: Project for color application deployments
+  
+  # Allow manifests to deploy from specific repositories
+  sourceRepos:
+  - 'https://github.com/renatts/argo-demo-repo.git'
+  - 'https://github.com/renatts/*'  # Allow all repos under your GitHub account
+  
+  # Destinations where apps in this project can deploy to
+  destinations:
+  - namespace: 'default'
+    server: https://kubernetes.default.svc
+  - namespace: 'argocd'
+    server: https://kubernetes.default.svc
+  - namespace: 'color-*'  # Allow deployment to any namespace starting with "color-"
+    server: https://kubernetes.default.svc
+  
+  # Cluster resource whitelist (what resources can be deployed)
+  clusterResourceWhitelist:
+  - group: ''
+    kind: Namespace
+  
+  # Namespace resource whitelist
+  namespaceResourceWhitelist:
+  - group: 'argoproj.io'
+    kind: Application
+  - group: 'apps'
+    kind: Deployment
+  - group: 'apps'
+    kind: ReplicaSet
+  - group: ''
+    kind: Service
+  - group: ''
+    kind: Pod
+  - group: ''
+    kind: ConfigMap
+  - group: ''
+    kind: Secret
+  - group: 'networking.k8s.io'
+    kind: Ingress
+  
+  # Roles for the project (RBAC)
+  roles:
+  - name: admin
+    description: Admin role for color project
+    policies:
+    - p, proj:color-project:admin, applications, *, color-project/*, allow
+    groups:
+    - argocd-admins
+    
+  - name: developer
+    description: Developer role for color project
+    policies:
+    - p, proj:color-project:developer, applications, get, color-project/*, allow
+    - p, proj:color-project:developer, applications, sync, color-project/*, allow
+    - p, proj:color-project:developer, applications, action/*, color-project/*, allow
+    
+  # Orphaned resources monitoring
+  orphanedResources:
+    warn: true
+    
+  # Sync windows (optional - when sync is allowed)
+  syncWindows:
+  - kind: allow
+    schedule: "* * * * *"  # Always allow sync
+    duration: 24h
+    applications:
+    - "*"
