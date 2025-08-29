@@ -1,0 +1,128 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+._*
+.Spotlight-V100
+.Trashes
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.lnk
+
+# Linux
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+.nfs*
+
+# Editor directories and files
+.idea/
+.vscode/
+*.swp
+*.swo
+*.swn
+*.bak
+*.tmp
+.*.swp
+*~.nib
+.netrwhist
+Session.vim
+.vim/
+
+# Temporary files
+*.log
+*.pid
+*.seed
+*.pid.lock
+tmp/
+temp/
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Kubernetes
+kubeconfig
+*.kubeconfig
+.kube/
+
+# Helm
+*.tgz
+charts/*.tgz
+requirements.lock
+
+# ArgoCD
+# ArgoCD app manifests with sensitive data
+*-secret.yaml
+*-secrets.yaml
+
+# Backup files
+*.backup
+*.bk
+*.orig
+
+# Certificates and keys
+*.pem
+*.key
+*.crt
+*.cer
+*.pfx
+*.p12
+
+# Terraform (if using for infrastructure)
+*.tfstate
+*.tfstate.*
+.terraform/
+.terraform.lock.hcl
+
+# Python (if using scripts)
+__pycache__/
+*.py[cod]
+*$py.class
+.Python
+venv/
+ENV/
+
+# Node (if using any Node tools)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Coverage and test reports
+coverage/
+*.coverage
+.coverage.*
+htmlcov/
+
+# Documentation build files
+docs/_build/
+site/
+
+# Archives
+*.tar
+*.tar.gz
+*.zip
+*.gz
+*.bz2
+*.7z
+*.rar
+
+# Ignore override files (local overrides)
+*-override.yaml
+*-override.yml
+override-*.yaml
+override-*.yml
+
+# Local values files that might contain sensitive data
+values-local.yaml
+values-local.yml
+values-private.yaml
+values-private.yml

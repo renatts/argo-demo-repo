@@ -1,0 +1,42 @@
+ArgoCD Access Configuration - Successfully Set Up!
+===================================================
+
+Access URL: http://argocd.local
+Alternative URL: https://argocd.local (with self-signed certificate warning)
+
+Login Credentials:
+------------------
+Username: admin
+Password: mUWkGtEsG3-oiUjk
+
+Important Notes:
+----------------
+1. The minikube tunnel is running in the background (PID: 15496)
+   - Keep your terminal open or the tunnel will stop
+   - To stop the tunnel later: kill 15496
+   - To restart the tunnel: minikube tunnel
+
+2. The hosts file has been updated with:
+   127.0.0.1 argocd.local
+
+3. The Ingress is configured with:
+   - NGINX Ingress Controller
+   - Backend protocol: HTTPS
+   - SSL redirect: disabled
+
+4. To view the ingress status:
+   kubectl get ingress -n argocd
+
+5. To restart the tunnel if needed:
+   minikube tunnel
+
+6. Configuration files created:
+   - /Users/renattsourkanou/argocd-ingress.yaml
+
+Troubleshooting:
+----------------
+If you can't access ArgoCD:
+1. Make sure minikube tunnel is running
+2. Check ingress status: kubectl get ingress -n argocd
+3. Verify hosts file: cat /etc/hosts | grep argocd
+4. Check ArgoCD pods: kubectl get pods -n argocd
