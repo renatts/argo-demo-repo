@@ -1,0 +1,40 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: color-app
+  namespace: argocd
+  # Finalizer to ensure app resources are deleted when the app is deleted
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  # Project this app belongs to
+  project: default
+  
+  # Source repository
+  source:
+    repoURL: https://github.com/renatts/argo-demo-repo.git
+    targetRevision: master
+    path: .  # Path to the manifests in the repo
+  
+  # Destination cluster and namespace
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: default
+  
+  # Sync policy
+  syncPolicy:
+    automated:
+      prune: true      # Delete resources that are not in Git
+      selfHeal: true   # Automatically sync when drift is detected
+      allowEmpty: false
+    syncOptions:
+    - CreateNamespace=true  # Create namespace if it doesn't exist
+    retry:
+      limit: 5
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 3m
+  
+  # Health assessment for resources
+  revisionHistoryLimit: 10
